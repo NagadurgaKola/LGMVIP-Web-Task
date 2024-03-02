@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To-Do List</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #todo-list {
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #f5f5f5;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    #todo-form {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    #todo-input {
+      flex: 1;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: all 0.2s ease-in-out;
+    }
+    #todo-input:focus {
+      outline: none;
+      border-color: #3399ff;
+      box-shadow: 0 0 5px rgba(51, 153, 255, 0.3);
+    }
+    #todo-add {
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #3399ff;
+      color: #fff;
+      transition: all 0.2s ease-in-out;
+    }
+    #todo-add:hover {
+      background-color: #2eafff;
+    }
+    #todo-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #todo-items li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px;
+      border-bottom: 1px solid #ccc;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease-in-out;
+    }
+    #todo-items li.added {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #todo-items li:last-child {
+      border-bottom: none;
+    }
+    #todo-items li input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    #todo-items li span.completed {
+      text-decoration: line-through;
+      color: #ccc;
+    }
+    #todo-items li.completed {
+      background-color: #d0ffd0;
+    }
+  </style>
+</head>
+<body>
+  <div id="todo-list">
+    <h1>To-Do List</h1>
+    <form id="todo-form">
+      <input type="text" id="todo-input" placeholder="Add a to-do">
+      <button type="button" id="todo-add">ADD TODO</button>
+    </form>
+    <ul id="todo-items">
+    </ul>
+  </div>
+  <script>
+    const todoInput = document.getElementById('todo-input');
+    const todoList = document.getElementById('todo-items');
+    const todoAdd = document.getElementById('todo-add');
+
+    todoAdd.addEventListener('click', function() {
+      const todoText = todoInput.value.trim();
+      if (todoText) {
+        const todoItem = document.createElement('li');
+        todoItem.innerHTML = `
+          <input type="checkbox">
+          <span>${todoText}</span>
+          <button>Delete</button>
+        `;
+        todoItem.classList.add('added');
+        todoList.appendChild(todoItem);
+        todoInput.value = '';
+      }
+    });
+
+    todoList.addEventListener('click', function(event) {
+      const target = event.target;
+      if (target.tagName === 'BUTTON') {
+        target.parentElement.remove();
+      } else if (target.tagName === 'INPUT' && target.type=== 'checkbox') {
+        target.nextElementSibling.classList.toggle('completed');
+      }
+    });
+  </script>
+</body>
+</html>
