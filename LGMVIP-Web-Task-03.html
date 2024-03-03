@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Enrollment Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Monospace";
+            background: linear-gradient(90deg, #828383 30%, #828383 70%);
+            display: flex;
+            flex-direction: column; /* Changed to column to stack elements vertically */
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .form-container {
+            width: 80%; /* Adjusted width to manage size */
+            max-width: 500px; /* Set a max-width for larger screens */
+            margin: 10px auto; /* Added margin for spacing and auto for centering */
+            padding: 20px;
+            background: #fff; /* Optional: added background color for visibility */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: added shadow for depth */
+            border-radius: 8px; /* Optional: added border-radius for rounded corners */
+        }
+        .data-display{
+            width: 80%; /* Adjusted width to manage size */
+            text-align: center;
+            max-width: 900px; /* Set a max-width for larger screens */
+            margin: 10px auto; /* Added margin for spacing and auto for centering */
+            padding: 20px;
+            background: #fff; /* Optional: added background color for visibility */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: added shadow for depth */
+            border-radius: 8px; /* Optional: added border-radius for rounded corners */
+        }
+        h1 {
+            color: #000066;
+            text-align: center;
+            margin-bottom: 20px; /* Adjusted margin for spacing */
+            background: #8ee0f7;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: added shadow for depth */
+            border-radius: 8px;
+
+        }
+        .input-group {
+            margin: 28px;
+            display: flex;
+            justify-content:space-between;
+            align-items: center; /* Added to vertically center align items */
+        }
+        .input-group label, .input-group input, .input-group select, .input-group textarea, #entry {
+            font-size: 16px; /* Adjusted font size for consistency */
+            padding: 8px; /* Adjusted padding for better form control visibility */
+        }
+        #entry {
+            width: auto; /* Changed to auto to fit content */
+            padding: 10px 20px; /* Adjusted padding for better appearance */
+            margin-top: 10px;
+            cursor: pointer;
+            border: none; /* Removed border */
+            border-radius: 5px; /* Added border-radius for rounded button */
+        }
+        #entry:hover{
+            width: auto; /* Changed to auto to fit content */
+            padding: 10px 20px; /* Adjusted padding for better appearance */
+            margin-top: 10px;
+            cursor: pointer;
+            border: none; /* Removed border */
+            border-radius: 5px;
+            background-color: #3aa2f1;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%; /* Ensure table takes the full width */
+            margin-top: 20px;
+        }
+        th, td {
+            border: 2px solid black;
+            padding: 8px; /* Adjusted padding for better readability */
+            text-align: left; /* Optional: align text to left for readability */
+        }
+    </style>
+</head>
+<body>
+     <!-- Moved outside form-container for global centering -->
+    <div class="form-container">
+        <h1><u>Student Registration Form</u></h1>
+        <div class="input-group"><b>Name:</b> <input id="name" type="text"/></div>
+        <div class="input-group"><b>Email:</b> <input id="email" type="text"/></div>
+        <div class="input-group"><b>Age:</b> <input id="age" type="text"/></div>
+        <div class="input-group"><b>Mobile No:</b> <input id="mobile" type="text"/></div>
+        <div class="input-group"><b>Gender:</b>
+            <span>
+                <input id="gender1" type="radio" name="gender" value="Female"> Female
+                <input id="gender2" type="radio" name="gender" value="Male"> Male
+            </span>
+        </div>
+        <div class="input-group"><b>Courses:</b>
+            <input id="check1" type="radio" name="check" value="CSE"> CSE
+                <br><input id="check2" type="radio" name="check" value="ECE"> ECE
+                <br><input id="check3" type="radio" name="check" value="CIVIL"> CIVIL
+                <br><input id="check4" type="radio" name="check" value="MECH"> MECH
+                <br><input id="check5" type="radio" name="check" value="BBA"> BBA
+        </div>
+        <pre>                          <button id="entry">Register</button></pre>
+    </div>
+    <div class="data-display">
+        <table id="display">
+            <tr style="text-align: center;">
+                <th>NAME</th>
+                <th>EMAIL</th>
+                <th>AGE</th>
+                <th>MOBILE NUMBER</th>
+                <th>GENDER</th>
+                <th>COURSES</th>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var entry = document.getElementById("entry");
+        entry.addEventListener("click", displayDetails);
+
+        function displayDetails() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var age = document.getElementById("age").value;
+            var mobile = document.getElementById("mobile").value;
+            var gender = document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : '';
+            var checks = document.querySelectorAll('input[name="check"]:checked');
+            var check_values = Array.from(checks).map(check => check.value).join(', ');
+
+            if(!name || !email || !age || !mobile || !gender || check_values === '') {
+                alert("Please fill all the fields!");
+                return;
+            }
+
+            var display = document.getElementById("display");
+            var newRow = display.insertRow(-1);
+
+            newRow.insertCell(0).innerHTML = name;
+            newRow.insertCell(1).innerHTML = email;
+            newRow.insertCell(2).innerHTML = age;
+            newRow.insertCell(3).innerHTML = mobile;
+            newRow.insertCell(4).innerHTML = gender;
+            newRow.insertCell(5).innerHTML = check_values;
+        }
+    </script>
+</body>
+</html>
